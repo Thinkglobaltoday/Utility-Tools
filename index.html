@@ -252,6 +252,25 @@ function encodeURL() {
   }
 }
 
+
+function decodeURL() {
+  let input = document.getElementById("urlInput").value;
+  try {
+    document.getElementById("urlOutput").innerText = decodeURIComponent(input);
+  } catch {
+    document.getElementById("urlOutput").innerText = "Invalid encoded URL";
+  }
+
+  function encodeBase64() {
+  let input = document.getElementById("b64Input").value;
+  try {
+    let encoded = btoa(unescape(encodeURIComponent(input)));
+    document.getElementById("b64Output").innerText = encoded;
+  } catch (e) {
+    document.getElementById("b64Output").innerText = "Encoding error";
+  }
+}
+
 function decodeBase64() {
   let input = document.getElementById("b64Input").value;
   try {
@@ -260,14 +279,7 @@ function decodeBase64() {
   } catch (e) {
     document.getElementById("b64Output").innerText = "Invalid Base64 string";
   }
-}
-function decodeURL() {
-  let input = document.getElementById("urlInput").value;
-  try {
-    document.getElementById("urlOutput").innerText = decodeURIComponent(input);
-  } catch {
-    document.getElementById("urlOutput").innerText = "Invalid encoded URL";
-  }
+    }
 }
 
 </script>
