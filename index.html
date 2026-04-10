@@ -242,20 +242,7 @@ function encodeURL() {
   document.getElementById("urlOutput").innerText = encodeURIComponent(input);
 }
 
-function decodeURL() {
-  let input = document.getElementById("urlInput").value;
-  try {
-    document.getElementById("urlOutput").innerText = decodeURIComponent(input);
-  } catch {
-    document.getElementById("urlOutput").innerText = "Invalid encoded URL";
-  }
-}
-
-</script>
-
-</body>
-  </html>
-function encodeBase64() {
+  function encodeBase64() {
   let input = document.getElementById("b64Input").value;
   try {
     let encoded = btoa(unescape(encodeURIComponent(input)));
@@ -269,6 +256,25 @@ function decodeBase64() {
   let input = document.getElementById("b64Input").value;
   try {
     let decoded = decodeURIComponent(escape(atob(input)));
+    document.getElementById("b64Output").innerText = decoded;
+  } catch (e) {
+    document.getElementById("b64Output").innerText = "Invalid Base64 string";
+  }
+}
+function decodeURL() {
+  let input = document.getElementById("urlInput").value;
+  try {
+    document.getElementById("urlOutput").innerText = decodeURIComponent(input);
+  } catch {
+    document.getElementById("urlOutput").innerText = "Invalid encoded URL";
+  }
+}
+
+</script>
+
+</body>
+  </html>
+
     document.getElementById("b64Output").innerText = decoded;
   } catch (e) {
     document.getElementById("b64Output").innerText = "Invalid Base64 string";
