@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QuickTools Pro - Free Online Utility Tools</title>
+  <meta name="description" content="Free online utility tools: QR generator, JSON formatter, URL encoder, word counter, and more. Fast and simple.">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+
+    header {
+      background: #111;
+      color: white;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 12px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .card {
+      background: white;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      background: #222;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #444;
+    }
+
+    .output {
+      margin-top: 10px;
+      font-weight: bold;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: #666;
+    }
+
+    img {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>QuickTools Pro</h1>
+  <p>Fast free tools for everyday use</p>
+</header>
+
+<div class="container">
+  <div class="grid">
+
+    <!-- TEXT CONVERTER -->
+    <div class="card">
+      <h3>Text Converter</h3>
+      <div class="tag">Convert text to upper or lower case</div>
+
+      <textarea id="textInput" placeholder="Type or paste text..."></textarea>
+
+      <button onclick="toUpper()">UPPERCASE</button>
+      <button onclick="toLower()">lowercase</button>
+
+      <div class="output" id="textOutput"></div>
+    </div>
+
+    <!-- WORD COUNTER -->
+    <div class="card">
+      <h3>Word Counter</h3>
+      <div class="tag">Count words in any text</div>
+
+      <textarea id="wordInput" placeholder="Paste text..."></textarea>
+
+      <button onclick="countWords()">Count Words</button>
+
+      <div class="output" id="wordOutput"></div>
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="card">
+      <h3>Password Generator</h3>
+      <div class="tag">Generate secure passwords</div>
+
+      <button onclick="generatePassword()">Generate Password</button>
+
+      <div class="output" id="passOutput"></div>
+    </div>
+
+    <!-- QR CODE -->
+    <div class="card">
+      <h3>QR Code Generator</h3>
+      <div class="tag">Turn text or links into QR codes</div>
+
+      <input id="qrInput" placeholder="Enter text or URL">
+
+      <button onclick="generateQR()">Generate QR</button>
+
+      <div class="output">
+        <img id="qrImage" style="display:none; max-width:100%;">
+      </div>
+    </div>
+
+    <!-- JSON FORMATTER -->
+    <div class="card">
+      <h3>JSON Formatter</h3>
+      <div class="tag">Format or minify JSON</div>
+
+      <textarea id="jsonInput" placeholder="Paste JSON..."></textarea>
+
+      <button onclick="formatJSON()">Format</button>
+      <button onclick="minifyJSON()">Minify</button>
+
+      <div class="output" id="jsonOutput"></div>
+    </div>
+
+    <!-- URL ENCODER -->
+    <div class="card">
+      <h3>URL Encoder / Decoder</h3>
+      <div class="tag">Encode or decode URLs</div>
+
+      <textarea id="urlInput" placeholder="Paste text or URL..."></textarea>
+
+      <button onclick="encodeURL()">Encode</button>
+      <button onclick="decodeURL()">Decode</button>
+
+      <div class="output" id="urlOutput"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+function toUpper() {
+  let text = document.getElementById("textInput").value;
+  document.getElementById("textOutput").innerText = text.toUpperCase();
+}
+
+function toLower() {
+  let text = document.getElementById("textInput").value;
+  document.getElementById("textOutput").innerText = text.toLowerCase();
+}
+
+function countWords() {
+  let text = document.getElementById("wordInput").value.trim();
+  let count = text === "" ? 0 : text.split(/\s+/).length;
+  document.getElementById("wordOutput").innerText = "Words: " + count;
+}
+
+function generatePassword() {
+  let chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
+  let pass = "";
+  for (let i = 0; i < 14; i++) {
+    pass += chars[Math.floor(Math.random() * chars.length)];
+  }
+  document.getElementById("passOutput").innerText = pass;
+}
+
+function generateQR() {
+  let text = document.getElementById("qrInput").value;
+  if (!text) return;
+
+  let url = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(text);
+
+  let img = document.getElementById("qrImage");
+  img.src = url;
+  img.style.display = "block";
+}
+
+function formatJSON() {
+  let input = document.getElementById("jsonInput").value;
+  try {
+    let obj = JSON.parse(input);
+    document.getElementById("jsonOutput").innerText = JSON.stringify(obj, null, 2);
+  } catch {
+    document.getElementById("jsonOutput").innerText = "Invalid JSON";
+  }
+}
+
+function minifyJSON() {
+  let input = document.getElementById("jsonInput").value;
+  try {
+    let obj = JSON.parse(input);
+    document.getElementById("jsonOutput").innerText = JSON.stringify(obj);
+  } catch {
+    document.getElementById("jsonOutput").innerText = "Invalid JSON";
+  }
+}
+
+function encodeURL() {
+  let input = document.getElementById("urlInput").value;
+  document.getElementById("urlOutput").innerText = encodeURIComponent(input);
+}
+
+function decodeURL() {
+  let input = document.getElementById("urlInput").value;
+  try {
+    document.getElementById("urlOutput").innerText = decodeURIComponent(input);
+  } catch {
+    document.getElementById("urlOutput").innerText = "Invalid encoded URL";
+  }
+}
+
+</script>
+
+</body>
+  </html>
